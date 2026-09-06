@@ -22,7 +22,7 @@ export async function connectToDatabase() {
     try {
         await client.connect();
 
-        db = client.db();
+        db = client.db("cse341");
 
         console.log("MongoDB connected successfully!");
 
