@@ -1,0 +1,229 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Temple API",
+    "description": "API documentation for the CSE341 Temple API",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "name": "apiKey",
+      "in": "header",
+      "description": "API key required for GET temple requests."
+    }
+  },
+  "paths": {
+    "/temples/": {
+      "get": {
+        "description": "Retrieve all temples. Requires a valid apiKey header.",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Valid API key."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of temples returned successfully."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new temple.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Temple information for the new temple.",
+            "schema": {
+              "$ref": "#/definitions/TempleInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple created successfully."
+          },
+          "400": {
+            "description": "Content can not be empty."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+    "/temples/{temple_id}": {
+      "get": {
+        "description": "Retrieve a single temple using its temple_id. Requires a valid apiKey header.",
+        "parameters": [
+          {
+            "name": "temple_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The temple_id of the temple to retrieve.",
+            "example": "3"
+          },
+          {
+            "name": "apiKey",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Valid API key."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple returned successfully."
+          },
+          "404": {
+            "description": "Temple not found."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      },
+      "put": {
+        "description": "Update an existing temple using its temple_id.",
+        "parameters": [
+          {
+            "name": "temple_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The temple_id of the temple to update.",
+            "example": "3"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Temple information to update. You may provide one or more fields.",
+            "schema": {
+              "$ref": "#/definitions/TempleUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple updated successfully."
+          },
+          "400": {
+            "description": "Data to update can not be empty."
+          },
+          "404": {
+            "description": "Temple not found."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete an existing temple using its temple_id.",
+        "parameters": [
+          {
+            "name": "temple_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The temple_id of the temple to delete.",
+            "example": "9999"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple deleted successfully."
+          },
+          "404": {
+            "description": "Temple not found."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "TempleInput": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "temple_id": {
+          "type": "integer",
+          "example": 267,
+          "description": "Unique temple ID."
+        },
+        "name": {
+          "type": "string",
+          "example": "Lagos Nigeria Temple",
+          "description": "Name of the temple."
+        },
+        "description": {
+          "type": "string",
+          "example": "A beautiful temple in Lagos, Nigeria.",
+          "description": "Description of the temple."
+        },
+        "location": {
+          "type": "string",
+          "example": "Lagos, Nigeria",
+          "description": "Location of the temple."
+        }
+      }
+    },
+    "TempleUpdate": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Accra Ghana Temple",
+          "description": "Name of the temple."
+        },
+        "description": {
+          "type": "string",
+          "example": "Updated during CSE341 W02 testing.",
+          "description": "Updated description."
+        },
+        "location": {
+          "type": "string",
+          "example": "Accra, Greater Accra, Ghana",
+          "description": "Updated location."
+        },
+        "dedicated": {
+          "type": "string",
+          "example": "11 January 2004",
+          "description": "Temple dedication date."
+        },
+        "additionalInfo": {
+          "type": "boolean",
+          "example": false,
+          "description": "Additional information flag."
+        }
+      }
+    }
+  }
+}
