@@ -1,0 +1,181 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Contacts API",
+        "description": "API documentation for the CSE341 Contacts API",
+        "version": "1.0.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/contacts": {
+            "get": {
+                "summary": "Get all contacts",
+                "description": "Retrieve all contacts stored in the database.",
+                "responses": {
+                    "200": {
+                        "description": "Contacts retrieved successfully."
+                    },
+                    "500": {
+                        "description": "Failed to retrieve contacts."
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new contact",
+                "description": "Create a new contact. All fields are required.",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "description": "Contact information.",
+                        "schema": {
+                            "$ref": "#/definitions/ContactInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Contact created successfully. Returns the new contact ID."
+                    },
+                    "400": {
+                        "description": "All fields are required."
+                    },
+                    "500": {
+                        "description": "Failed to create contact."
+                    }
+                }
+            }
+        },
+        "/contacts/{id}": {
+            "get": {
+                "summary": "Get a contact by ID",
+                "description": "Retrieve a single contact using its MongoDB ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "MongoDB contact ID.",
+                        "example": "64f123456789abcdef123456"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contact retrieved successfully."
+                    },
+                    "404": {
+                        "description": "Contact not found."
+                    },
+                    "400": {
+                        "description": "Invalid contact ID."
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a contact",
+                "description": "Update an existing contact. The ID is used to locate the contact and is not modified.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "MongoDB contact ID.",
+                        "example": "64f123456789abcdef123456"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "description": "Updated contact information. All fields are required.",
+                        "schema": {
+                            "$ref": "#/definitions/ContactInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Contact updated successfully."
+                    },
+                    "400": {
+                        "description": "Invalid contact ID or missing required fields."
+                    },
+                    "404": {
+                        "description": "Contact not found."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a contact",
+                "description": "Delete an existing contact using its MongoDB ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "MongoDB contact ID.",
+                        "example": "64f123456789abcdef123456"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Contact deleted successfully."
+                    },
+                    "400": {
+                        "description": "Invalid contact ID."
+                    },
+                    "404": {
+                        "description": "Contact not found."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ContactInput": {
+            "type": "object",
+            "required": [
+                "firstName",
+                "lastName",
+                "email",
+                "favoriteColor",
+                "birthday"
+            ],
+            "properties": {
+                "firstName": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "john.doe@example.com"
+                },
+                "favoriteColor": {
+                    "type": "string",
+                    "example": "Blue"
+                },
+                "birthday": {
+                    "type": "string",
+                    "example": "1995-05-15"
+                }
+            }
+        }
+    }
+}
