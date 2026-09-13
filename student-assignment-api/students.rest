@@ -1,0 +1,59 @@
+### Create a student
+POST http://localhost:8080/students
+Content-Type: application/json
+
+{
+  "studentId": "STU001",
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com",
+  "phone": "08012345678",
+  "program": "Web Development",
+  "level": "200",
+  "status": "active"
+}
+
+###
+
+
+### Get all students
+GET http://localhost:8080/students
+
+### Get student by ID
+GET http://localhost:8080/students/6aa5d0de1dfea93208012b76
+
+### Test student validation
+POST http://localhost:8080/students
+Content-Type: application/json
+
+{
+  "studentId": "STU002",
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "not-an-email",
+  "phone": "08012345678",
+  "program": "Web Development",
+  "level": "200",
+  "status": "active"
+}
+
+### Update student
+PUT http://localhost:8080/students/6aa5d0de1dfea93208012b76
+Content-Type: application/json
+
+{
+  "studentId": "STU001",
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.updated@example.com",
+  "phone": "08098765432",
+  "program": "Full Stack Web Development",
+  "level": "300",
+  "status": "active"
+}
+
+### Delete student
+DELETE http://localhost:8080/students/6aa5d0de1dfea93208012b76
+
+### Confirm student was deleted
+GET http://localhost:8080/students/6aa5d0de1dfea93208012b76

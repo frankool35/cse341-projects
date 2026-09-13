@@ -1,0 +1,63 @@
+### Create an assignment
+POST http://localhost:8080/assignments
+Content-Type: application/json
+
+{
+  "assignmentId": "ASM001",
+  "title": "Build a Personal Portfolio",
+  "description": "Create a responsive personal portfolio using HTML and CSS.",
+  "course": "Web Development",
+  "studentId": "STU001",
+  "dueDate": "2026-09-30",
+  "maxScore": 100,
+  "status": "assigned",
+  "submissionUrl": "none"
+}
+
+### Get all assignments
+GET http://localhost:8080/assignments
+
+### Get assignment by ID
+GET http://localhost:8080/assignments/6aa5d8e8b3950be43a049d8f
+
+### Test assignment validation
+POST http://localhost:8080/assignments
+Content-Type: application/json
+
+{
+  "assignmentId": "ASM002",
+  "title": "Test Assignment",
+  "description": "Testing validation.",
+  "course": "Web Development",
+  "studentId": "STU001",
+  "dueDate": "2026-09-30",
+  "maxScore": -10,
+  "status": "assigned",
+  "submissionUrl": "none"
+}
+
+### Update assignment
+PUT http://localhost:8080/assignments/6aa5d8e8b3950be43a049d8f
+Content-Type: application/json
+
+{
+  "assignmentId": "ASM001",
+  "title": "Build a Personal Portfolio - Updated",
+  "description": "Create a responsive personal portfolio using HTML, CSS, and JavaScript.",
+  "course": "Web Development",
+  "studentId": "STU001",
+  "dueDate": "2026-10-05",
+  "maxScore": 100,
+  "status": "submitted",
+  "submissionUrl": "https://example.com/submission"
+}
+
+
+### Verify updated assignment
+GET http://localhost:8080/assignments/6aa5d8e8b3950be43a049d8f
+
+### Delete assignment
+DELETE http://localhost:8080/assignments/6aa5d8e8b3950be43a049d8f
+
+### Confirm assignment was deleted
+GET http://localhost:8080/assignments/6aa5d8e8b3950be43a049d8f

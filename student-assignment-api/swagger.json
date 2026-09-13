@@ -1,0 +1,325 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Student Assignment Tracker API",
+        "description": "REST API for managing students and assignments.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Local development server"
+        }
+    ],
+    "paths": {
+        "/students": {
+            "get": {
+                "summary": "Get all students",
+                "responses": {
+                    "200": {
+                        "description": "Students retrieved successfully"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a student",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Student"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Student created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/students/{id}": {
+            "get": {
+                "summary": "Get a student by ID",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Student retrieved successfully"
+                    },
+                    "400": {
+                        "description": "Invalid student ID"
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a student",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Student"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Student updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a student",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Student deleted successfully"
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                }
+            }
+        },
+        "/assignments": {
+            "get": {
+                "summary": "Get all assignments",
+                "responses": {
+                    "200": {
+                        "description": "Assignments retrieved successfully"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create an assignment",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Assignment"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Assignment created successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/assignments/{id}": {
+            "get": {
+                "summary": "Get an assignment by ID",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assignment retrieved successfully"
+                    },
+                    "400": {
+                        "description": "Invalid assignment ID"
+                    },
+                    "404": {
+                        "description": "Assignment not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update an assignment",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Assignment"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assignment updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "404": {
+                        "description": "Assignment not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete an assignment",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assignment deleted successfully"
+                    },
+                    "404": {
+                        "description": "Assignment not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "parameters": {
+            "id": {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        },
+        "schemas": {
+            "Student": {
+                "type": "object",
+                "required": [
+                    "studentId",
+                    "firstName",
+                    "lastName",
+                    "email",
+                    "phone",
+                    "program",
+                    "level",
+                    "status"
+                ],
+                "properties": {
+                    "studentId": {
+                        "type": "string",
+                        "example": "STU001"
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "john.doe@example.com"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "08012345678"
+                    },
+                    "program": {
+                        "type": "string",
+                        "example": "Web Development"
+                    },
+                    "level": {
+                        "type": "string",
+                        "example": "200"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "active"
+                    }
+                }
+            },
+            "Assignment": {
+                "type": "object",
+                "required": [
+                    "assignmentId",
+                    "title",
+                    "description",
+                    "course",
+                    "studentId",
+                    "dueDate",
+                    "maxScore",
+                    "status",
+                    "submissionUrl"
+                ],
+                "properties": {
+                    "assignmentId": {
+                        "type": "string",
+                        "example": "ASM001"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Build a Personal Portfolio"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Create a responsive portfolio."
+                    },
+                    "course": {
+                        "type": "string",
+                        "example": "Web Development"
+                    },
+                    "studentId": {
+                        "type": "string",
+                        "example": "STU001"
+                    },
+                    "dueDate": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2026-09-30"
+                    },
+                    "maxScore": {
+                        "type": "number",
+                        "example": 100
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "assigned"
+                    },
+                    "submissionUrl": {
+                        "type": "string",
+                        "example": "none"
+                    }
+                }
+            }
+        }
+    }
+}
