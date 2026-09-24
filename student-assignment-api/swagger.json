@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Student Assignment Tracker API",
-        "description": "REST API for managing students and assignments.",
+        "description": "REST API for managing students and assignments with GitHub OAuth authentication.",
         "version": "1.0.0"
     },
     "servers": [
@@ -10,24 +10,86 @@
             "url": "https://cse341-projects-p64y.onrender.com",
             "description": "Production server"
         },
-
         {
             "url": "http://localhost:8080",
             "description": "Local development server"
         }
     ],
     "paths": {
+        "/auth/github": {
+            "get": {
+                "summary": "Start GitHub OAuth authentication",
+                "description": "Redirects the user to GitHub to authenticate.",
+                "responses": {
+                    "302": {
+                        "description": "Redirect to GitHub authentication"
+                    }
+                }
+            }
+        },
+        "/auth/github/callback": {
+            "get": {
+                "summary": "GitHub OAuth callback",
+                "description": "Handles the callback from GitHub after successful authentication.",
+                "responses": {
+                    "200": {
+                        "description": "Authentication successful"
+                    },
+                    "401": {
+                        "description": "Authentication failed"
+                    }
+                }
+            }
+        },
+        "/auth/status": {
+            "get": {
+                "summary": "Check authentication status",
+                "description": "Returns the current user's authentication status.",
+                "responses": {
+                    "200": {
+                        "description": "User is authenticated"
+                    },
+                    "401": {
+                        "description": "User is not authenticated"
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "get": {
+                "summary": "Log out",
+                "description": "Ends the current user's session.",
+                "responses": {
+                    "200": {
+                        "description": "Logout successful"
+                    }
+                }
+            }
+        },
         "/students": {
             "get": {
                 "summary": "Get all students",
+                "security": [
+                    {
+                        "sessionAuth": []
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Students retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Authentication required"
                     }
                 }
             },
             "post": {
                 "summary": "Create a student",
+                "security": [
+                    {
+                        "sessionAuth": []
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -44,6 +106,9 @@
                     },
                     "400": {
                         "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Authentication required"
                     }
                 }
             }
@@ -51,6 +116,11 @@
         "/students/{id}": {
             "get": {
                 "summary": "Get a student by ID",
+                "security": [
+                    {
+                        "sessionAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/id"
@@ -63,6 +133,9 @@
                     "400": {
                         "description": "Invalid student ID"
                     },
+                    "401": {
+                        "description": "Authentication required"
+                    },
                     "404": {
                         "description": "Student not found"
                     }
@@ -70,6 +143,11 @@
             },
             "put": {
                 "summary": "Update a student",
+                "security": [
+                    {
+                        "sessionAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/id"
@@ -92,6 +170,9 @@
                     "400": {
                         "description": "Validation error"
                     },
+                    "401": {
+                        "description": "Authentication required"
+                    },
                     "404": {
                         "description": "Student not found"
                     }
@@ -99,6 +180,11 @@
             },
             "delete": {
                 "summary": "Delete a student",
+                "security": [
+                    {
+                        "sessionAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/id"
@@ -107,6 +193,9 @@
                 "responses": {
                     "200": {
                         "description": "Student deleted successfully"
+                    },
+                    "401": {
+                        "description": "Authentication required"
                     },
                     "404": {
                         "description": "Student not found"
@@ -117,14 +206,27 @@
         "/assignments": {
             "get": {
                 "summary": "Get all assignments",
+                "security": [
+                    {
+                        "sessionAuth": []
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Assignments retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Authentication required"
                     }
                 }
             },
             "post": {
                 "summary": "Create an assignment",
+                "security": [
+                    {
+                        "sessionAuth": []
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -141,6 +243,9 @@
                     },
                     "400": {
                         "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Authentication required"
                     }
                 }
             }
@@ -148,6 +253,11 @@
         "/assignments/{id}": {
             "get": {
                 "summary": "Get an assignment by ID",
+                "security": [
+                    {
+                        "sessionAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/id"
@@ -160,6 +270,9 @@
                     "400": {
                         "description": "Invalid assignment ID"
                     },
+                    "401": {
+                        "description": "Authentication required"
+                    },
                     "404": {
                         "description": "Assignment not found"
                     }
@@ -167,6 +280,11 @@
             },
             "put": {
                 "summary": "Update an assignment",
+                "security": [
+                    {
+                        "sessionAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/id"
@@ -189,6 +307,9 @@
                     "400": {
                         "description": "Validation error"
                     },
+                    "401": {
+                        "description": "Authentication required"
+                    },
                     "404": {
                         "description": "Assignment not found"
                     }
@@ -196,6 +317,11 @@
             },
             "delete": {
                 "summary": "Delete an assignment",
+                "security": [
+                    {
+                        "sessionAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/id"
@@ -205,6 +331,9 @@
                     "200": {
                         "description": "Assignment deleted successfully"
                     },
+                    "401": {
+                        "description": "Authentication required"
+                    },
                     "404": {
                         "description": "Assignment not found"
                     }
@@ -213,6 +342,14 @@
         }
     },
     "components": {
+        "securitySchemes": {
+            "sessionAuth": {
+                "type": "apiKey",
+                "in": "cookie",
+                "name": "connect.sid",
+                "description": "Authentication is provided through the Express session created after GitHub OAuth login."
+            }
+        },
         "parameters": {
             "id": {
                 "name": "id",

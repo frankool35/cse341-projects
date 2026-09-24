@@ -8,13 +8,18 @@ import {
     removeStudent
 } from "../controllers/studentController.js";
 
+import { requireAuth } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
-router.get("/", getStudents);
-router.get("/:id", getStudent);
+router.get("/", requireAuth, getStudents);
 
-router.post("/", createNewStudent);
-router.put("/:id", updateExistingStudent);
-router.delete("/:id", removeStudent);
+router.get("/:id", requireAuth, getStudent);
+
+router.post("/", requireAuth, createNewStudent);
+
+router.put("/:id", requireAuth, updateExistingStudent);
+
+router.delete("/:id", requireAuth, removeStudent);
 
 export default router;

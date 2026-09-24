@@ -8,13 +8,18 @@ import {
     removeAssignment
 } from "../controllers/assignmentController.js";
 
+import { requireAuth } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
-router.get("/", getAssignments);
-router.get("/:id", getAssignment);
+router.get("/", requireAuth, getAssignments);
 
-router.post("/", createNewAssignment);
-router.put("/:id", updateExistingAssignment);
-router.delete("/:id", removeAssignment);
+router.get("/:id", requireAuth, getAssignment);
+
+router.post("/", requireAuth, createNewAssignment);
+
+router.put("/:id", requireAuth, updateExistingAssignment);
+
+router.delete("/:id", requireAuth, removeAssignment);
 
 export default router;
